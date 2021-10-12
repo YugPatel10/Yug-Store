@@ -49,7 +49,7 @@ const userCtrl = {
             const isMatch = await bcrypt.compare(password, user.password)
             if(!isMatch) return res.status(400).json({msg: "Incorrect password."})
 
-            // If login success , create access token and refresh token
+            // {login success} : It create access token and refresh token
             const accesstoken = createAccessToken({id: user._id})
             const refreshtoken = createRefreshToken({id: user._id})
 
@@ -76,10 +76,10 @@ const userCtrl = {
     refreshToken: (req, res) =>{
         try {
             const rf_token = req.cookies.refreshtoken;
-            if(!rf_token) return res.status(400).json({msg: "Please Login or Register"})
+            if(!rf_token) return res.status(400).json({msg: "You must Login or Register to shop at Yug's Cart"})
 
             jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) =>{
-                if(err) return res.status(400).json({msg: "Please Login or Register"})
+                if(err) return res.status(400).json({msg: "You must Login or Register to shop at Yug's Cart"})
 
                 const accesstoken = createAccessToken({id: user.id})
 
