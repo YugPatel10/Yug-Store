@@ -32,8 +32,7 @@ app.use('/api', require('./routes/paymentRouter'))
 // Connection to mongoDb
 const URI = process.env.MONGODB_URL
 mongoose.connect(URI, {
-    //useCreateIndex: true,
-   // useFindAndModify: false,
+    
     useNewUrlParser: true,
     useUnifiedTopology: true
 }, err =>{
@@ -41,12 +40,16 @@ mongoose.connect(URI, {
     console.log('Connected to MongoDB')
 })
 
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'))
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+    })
+}
 
-//app.get('/', (req, res) =>{
- // res.json({msg: "Welcome to Yug's Store, Thank you for Shoping with us! Have a good Day!"})
-//})
+
 
 const PORT = process.env.PORT || 5000
-app.listen(PORT,  () =>{
-  console.log('Server is running on port', PORT)
+app.listen(PORT, () =>{
+    console.log('Server is running on port', PORT)
 })
