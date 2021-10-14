@@ -8,8 +8,6 @@ const path = require('path')
 
 
 //Register-Access Token- RefreshToken-Cookie
-
-
 const app = express()
 app.use(express.json())
 app.use(cookieParser())
@@ -25,9 +23,6 @@ app.use('/api', require('./routes/categoryRouter'))
 app.use('/api', require('./routes/upload'))
 app.use('/api', require('./routes/productRouter'))
 app.use('/api', require('./routes/paymentRouter'))
-
-
-
 
 // Connection to mongoDb
 const URI = process.env.MONGODB_URL
@@ -46,8 +41,6 @@ if(process.env.NODE_ENV === 'production'){
         res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
     })
 }
-
-
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () =>{
